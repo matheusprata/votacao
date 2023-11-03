@@ -2,6 +2,7 @@ package com.prata.votacao.sessaovotacao.domain;
 
 import com.prata.votacao.pauta.domain.Pauta;
 import com.prata.votacao.sessaovotacao.application.api.SessaoAberturaRequest;
+import com.prata.votacao.sessaovotacao.application.api.VotoRequest;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,5 +47,37 @@ public class SessaoVotacao {
         this.momentoEncerramento = momentoAbertura.plusMinutes(this.tempoDuracao);
         this.status = StatusSessaoVotacao.ABERTA;
         this.votos = new HashMap<>();
+    }
+    public VotoPauta recebeVoto(VotoRequest votoRequest) {
+        validaSessaoAberta();
+        validaAssociado(votoRequest.getCpfAssociado());
+        VotoPauta voto = new VotoPauta(this, votoRequest);
+        votos.put(votoRequest.getCpfAssociado(),voto);
+        return voto;
+    }
+
+    private void validaSessaoAberta() {
+        atualizaStatus();
+        if(this.status.equals(StatusSessaoVotacao.FECHADA)) {
+            throw new RuntimeException("Sessão está fechada!");
+        }
+    }
+
+    private void atualizaStatus() {
+        if(this.status.equals(StatusSessaoVotacao.ABERTA)) {
+            if(LocalDateTime.now().isAfter(this.momentoEncerramento)) {
+                fechaSessao();
+            }
+        }
+    }
+
+    private void fechaSessao() {
+        this.status = StatusSessaoVotacao.FECHADA;
+    }
+
+    private void validaAssociado(String cpfAssociado) {
+        if(this.votos.containsKey(cpfAssociado)){
+            new RuntimeException("Associado Já Votou nessa Sessão!");
+        }
     }
 }

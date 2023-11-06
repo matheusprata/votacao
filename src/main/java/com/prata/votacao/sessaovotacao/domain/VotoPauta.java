@@ -5,7 +5,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;

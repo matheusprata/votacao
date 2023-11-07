@@ -1,3 +1,7 @@
 server:
   servlet:
     context-path: /votacao
+
+springdoc:
+  swagger-ui:
+    path: /public/swagger

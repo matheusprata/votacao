@@ -1,6 +1,7 @@
 package com.prata.votacao.sessaovotacao.domain;
 
 import com.prata.votacao.pauta.domain.Pauta;
+import com.prata.votacao.sessaovotacao.application.api.ResultadoSessaoResponse;
 import com.prata.votacao.sessaovotacao.application.api.SessaoAberturaRequest;
 import com.prata.votacao.sessaovotacao.application.api.VotoRequest;
 import lombok.AccessLevel;
@@ -79,5 +80,28 @@ public class SessaoVotacao {
         if(this.votos.containsKey(cpfAssociado)){
             new RuntimeException("Associado Já Votou nessa Sessão!");
         }
+    }
+
+    public ResultadoSessaoResponse obtemResultado() {
+        atualizaStatus();
+        return new ResultadoSessaoResponse(this);
+    }
+
+    public Long getTotalVotos() {
+        return Long.valueOf(this.votos.size());
+    }
+
+    public Long getTotalSim() {
+        return calculaVotosPorOpcao(OpcaoVoto.SIM);
+    }
+
+    public Long getTotalNao() {
+        return calculaVotosPorOpcao(OpcaoVoto.NAO);
+    }
+
+    private Long calculaVotosPorOpcao(OpcaoVoto opcao) {
+        return votos.values().stream()
+                .filter(voto -> voto.opcaoIgual(opcao))
+                .count();
     }
 }

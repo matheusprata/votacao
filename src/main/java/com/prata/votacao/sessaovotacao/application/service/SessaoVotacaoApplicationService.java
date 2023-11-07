@@ -2,10 +2,7 @@ package com.prata.votacao.sessaovotacao.application.service;
 
 import com.prata.votacao.pauta.application.service.PautaService;
 import com.prata.votacao.pauta.domain.Pauta;
-import com.prata.votacao.sessaovotacao.application.api.SessaoAberturaRequest;
-import com.prata.votacao.sessaovotacao.application.api.SessaoAberturaResponse;
-import com.prata.votacao.sessaovotacao.application.api.VotoRequest;
-import com.prata.votacao.sessaovotacao.application.api.VotoResponse;
+import com.prata.votacao.sessaovotacao.application.api.*;
 import com.prata.votacao.sessaovotacao.domain.SessaoVotacao;
 import com.prata.votacao.sessaovotacao.domain.VotoPauta;
 import lombok.RequiredArgsConstructor;
@@ -38,5 +35,14 @@ public class SessaoVotacaoApplicationService implements SessaoVotacaoService {
         sessaoVotacaoRepository.salva(sessao);
         log.info("[finish] SessaoVotacaoApplicationService - recebeVoto");
         return new VotoResponse(voto);
+    }
+    @Override
+    public ResultadoSessaoResponse obtemResultado(UUID idSessao) {
+        log.info("[start] SessaoVotacaoApplicationService - obtemResultado");
+        SessaoVotacao sessao = sessaoVotacaoRepository.buscaPorId(idSessao);
+        ResultadoSessaoResponse resultado = sessao.obtemResultado();
+        sessaoVotacaoRepository.salva(sessao);
+        log.info("[finish] SessaoVotacaoApplicationService - obtemResultado");
+        return resultado;
     }
 }

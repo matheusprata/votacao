@@ -49,6 +49,8 @@ public class SessaoVotacao {
         this.status = StatusSessaoVotacao.ABERTA;
         this.votos = new HashMap<>();
     }
+
+
     public VotoPauta recebeVoto(VotoRequest votoRequest) {
         validaSessaoAberta();
         validaAssociado(votoRequest.getCpfAssociado());

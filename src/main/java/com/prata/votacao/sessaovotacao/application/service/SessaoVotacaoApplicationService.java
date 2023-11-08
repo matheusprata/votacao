@@ -17,6 +17,7 @@ import java.util.UUID;
 public class SessaoVotacaoApplicationService implements SessaoVotacaoService {
     private final SessaoVotacaoRepository sessaoVotacaoRepository;
     private final PautaService pautaService;
+    private final AssociadoService associadoService;
 
     @Override
     public SessaoAberturaResponse abreSessao(SessaoAberturaRequest sessaoAberturaRequest) {

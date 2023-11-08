@@ -1,7 +1,7 @@
 package com.prata.votacao.config;
 
+import feign.Response;
 import feign.codec.ErrorDecoder;
-import org.apache.catalina.connector.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

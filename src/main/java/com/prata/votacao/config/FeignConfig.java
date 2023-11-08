@@ -1,13 +1,13 @@
 package com.prata.votacao.config;
 
 import feign.Client;
+import feign.Logger;
 import feign.Request;
 import feign.slf4j.Slf4jLogger;
-import lombok.Value;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.ssl.SSLContexts;
-import org.jboss.logging.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;

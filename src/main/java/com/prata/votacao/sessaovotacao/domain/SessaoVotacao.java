@@ -1,6 +1,7 @@
 package com.prata.votacao.sessaovotacao.domain;
 
 import com.prata.votacao.pauta.domain.Pauta;
+import com.prata.votacao.associado.application.service.AssociadoService;
 import com.prata.votacao.sessaovotacao.application.api.ResultadoSessaoResponse;
 import com.prata.votacao.sessaovotacao.application.api.SessaoAberturaRequest;
 import com.prata.votacao.sessaovotacao.application.api.VotoRequest;
@@ -51,9 +52,9 @@ public class SessaoVotacao {
     }
 
 
-    public VotoPauta recebeVoto(VotoRequest votoRequest) {
+    public VotoPauta recebeVoto(VotoRequest votoRequest, AssociadoService associadoService) {
         validaSessaoAberta();
-        validaAssociado(votoRequest.getCpfAssociado());
+        validaAssociado(votoRequest.getCpfAssociado(),associadoService);
         VotoPauta voto = new VotoPauta(this, votoRequest);
         votos.put(votoRequest.getCpfAssociado(),voto);
         return voto;
@@ -78,9 +79,14 @@ public class SessaoVotacao {
         this.status = StatusSessaoVotacao.FECHADA;
     }
 
-    private void validaAssociado(String cpfAssociado) {
+    private void validaAssociado(String cpfAssociado, AssociadoService associadoService) {
+        associadoService.validaAssociadoAptoVoto(cpfAssociado);
+        validaVotoDuplicado(cpfAssociado);
+    }
+
+    private void validaVotoDuplicado(String cpfAssociado) {
         if(this.votos.containsKey(cpfAssociado)){
-            new RuntimeException("Associado Já Votou nessa Sessão!");
+            throw new RuntimeException("Associado Já Votou nessa Sessão!");
         }
     }
 

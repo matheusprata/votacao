@@ -1,5 +1,6 @@
 package com.prata.votacao.sessaovotacao.application.service;
 
+import com.prata.votacao.associado.application.service.AssociadoService;
 import com.prata.votacao.pauta.application.service.PautaService;
 import com.prata.votacao.pauta.domain.Pauta;
 import com.prata.votacao.sessaovotacao.application.api.*;
@@ -17,6 +18,7 @@ import java.util.UUID;
 public class SessaoVotacaoApplicationService implements SessaoVotacaoService {
     private final SessaoVotacaoRepository sessaoVotacaoRepository;
     private final PautaService pautaService;
+    private final AssociadoService associadoService;
 
     @Override
     public SessaoAberturaResponse abreSessao(SessaoAberturaRequest sessaoAberturaRequest) {
@@ -29,11 +31,11 @@ public class SessaoVotacaoApplicationService implements SessaoVotacaoService {
 
     @Override
     public VotoResponse recebeVoto(UUID idSessao, VotoRequest novoVoto) {
-        log.info("[start] SessaoVotacaoApplicationService - recebeVoto");
+        log.debug("[start] SessaoVotacaoApplicationService - recebeVoto");
         SessaoVotacao sessao = sessaoVotacaoRepository.buscaPorId(idSessao);
-        VotoPauta voto = sessao.recebeVoto(novoVoto);
+        VotoPauta voto = sessao.recebeVoto(novoVoto,associadoService);
         sessaoVotacaoRepository.salva(sessao);
-        log.info("[finish] SessaoVotacaoApplicationService - recebeVoto");
+        log.debug("[finish] SessaoVotacaoApplicationService - recebeVoto");
         return new VotoResponse(voto);
     }
     @Override

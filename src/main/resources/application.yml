@@ -5,3 +5,7 @@ server:
 springdoc:
   swagger-ui:
     path: /public/swagger
+
+logging:
+  level:
+    com.prata: ${LOG_LEVEL:DEBUG}

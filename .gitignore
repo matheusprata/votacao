@@ -1,4 +1,6 @@
 HELP.md
+votacao-prata.pem/
+database/
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

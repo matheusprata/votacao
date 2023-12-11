@@ -27,8 +27,8 @@ services:
       - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=852456
+      - POSTGRES_DB=votacao
     volumes:
       - ./database:/docker-entrypoint-initdb.d/
       - ./database/data:/var/lib/postgresql/data

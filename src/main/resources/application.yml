@@ -13,7 +13,7 @@ logging:
 spring:
   datasource:
     driverClassName: org.postgresql.Driver
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/postgres?currentSchema=votacao}
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/votacao}
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:852456}
     type: com.zaxxer.hikari.HikariDataSource
